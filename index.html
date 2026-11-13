@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta http-equiv="Cache-Control" content="no-cache">
 <style>body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -190,7 +191,7 @@ button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px so
   function tierIndex(score){ var t=0; for(var i=0;i<TIERS.length;i++){ if(score>=TIERS[i].min) t=i; } return t; }
 
   /* Painted fighter art, one image per rank. */
-  function fighter(t){ return '<img src="img/fighter'+t+'.jpg" width="640" height="960" alt="">'; }
+  function fighter(t){ return '<img src="img/fighter'+t+'-v3.jpg" width="640" height="960" alt="">'; }
 
 
   var $=function(id){return document.getElementById(id);};
