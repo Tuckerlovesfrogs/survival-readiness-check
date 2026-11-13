@@ -285,6 +285,7 @@ button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px so
     var from=shown, start=null;
     function step(ts){ if(start===null) start=ts; var k=Math.min(1,(ts-start)/600); shown=Math.round(from+(sc-from)*k); $('num').textContent=shown; if(k<1) requestAnimationFrame(step); }
     requestAnimationFrame(step);
+    clearTimeout(paint.t); paint.t=setTimeout(function(){ shown=total(); $('num').textContent=shown; },750);
   }
 
   function finish(){
