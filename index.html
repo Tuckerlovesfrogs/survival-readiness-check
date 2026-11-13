@@ -9,87 +9,83 @@
 <body>
 <title>Survival Readiness Check</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
 <style>
-/* Layout: one narrow field-card column. The figure on its "ID card" stage is the only loud thing; everything else is quiet map-paper. */
+/* Layout: one arcade cabinet column. Single dark look on purpose: a 90s character-select screen. The pixel fighters are the loud part. */
 :root{
-  --bg:#E7ECDF; --panel:#F4F7EE; --fg:#1C2820; --muted:#566355; --line:#B9C4AE;
-  --accent:#D9480F; --accent-fg:#FFFFFF; --stage:#D5DEC8; --good:#3F7D4E;
-  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
-  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#141C16; --panel:#1D2820; --fg:#E6ECDD; --muted:#9FAD9A; --line:#3A4A3C;
-    --accent:#FF7A3D; --accent-fg:#1A0E05; --stage:#C3CDB6; --good:#7FC08D; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#141C16; --panel:#1D2820; --fg:#E6ECDD; --muted:#9FAD9A; --line:#3A4A3C;
-  --accent:#FF7A3D; --accent-fg:#1A0E05; --stage:#C3CDB6; --good:#7FC08D; color-scheme:dark;
+  color-scheme:dark;
+  --bg:#0d0620; --panel:#1a0f3a; --floor:#2b1a5c; --fg:#f3ecff; --muted:#a99cd1; --line:#4a3a8a;
+  --yellow:#ffd23f; --pink:#ff3d8b; --cyan:#3df2ff; --green:#7cff6b; --ink:#160a2b;
+  --display:"Press Start 2P","Courier New",monospace;
+  --body:"VT323","Courier New",monospace;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;
-  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 56px}
-.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-.tag{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
-h1,h2{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.95;margin:0;text-wrap:balance}
-h1{font-size:clamp(52px,13vw,104px)}
-h2{font-size:clamp(30px,7vw,44px)}
-h3{font-size:17px;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:24px;line-height:1.2;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:24px 56px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(0,0,0,.16) 0 1px,transparent 1px 3px)}
+.wrap{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+.stack{display:flex;flex-direction:column;gap:18px}
 p{margin:0}
-.lede{font-size:19px;max-width:58ch}
-.stack{display:flex;flex-direction:column;gap:16px}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.btn{background:var(--accent);color:var(--accent-fg);border:0;border-radius:4px;padding:14px 26px;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:.04em;text-transform:uppercase;align-self:flex-start}
-.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--line);font-size:18px;padding:9px 16px}
-.stagebox{background:var(--stage);border-radius:6px}
-.stagebox svg{display:block;width:100%;height:auto}
+h1,h2,h3,.tag,.btn,.pts{font-family:var(--display);font-weight:400;text-transform:uppercase;margin:0}
+h1{font-size:clamp(24px,7vw,46px);line-height:1.3;color:var(--yellow);text-shadow:4px 4px 0 var(--pink);overflow-wrap:anywhere}
+h2{font-size:clamp(15px,3.8vw,20px);line-height:1.55;color:var(--fg);text-transform:none;overflow-wrap:anywhere}
+h3{font-size:12px;line-height:1.6;color:var(--cyan)}
+.tag{font-size:10px;line-height:1.6;color:var(--cyan);letter-spacing:.04em}
+.lede{font-size:26px;max-width:46ch}
+button{color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.btn{background:var(--yellow);color:var(--ink);border:0;padding:16px 22px;font-size:16px;box-shadow:5px 5px 0 var(--pink);align-self:flex-start}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--pink)}
+.btn.blink{animation:blink 1.1s steps(2,jump-none) infinite}
+@keyframes blink{50%{background:#fff3b0}}
+.btn.ghost{background:transparent;color:var(--fg);border:3px solid var(--line);box-shadow:none;font-size:11px;padding:11px 14px}
 
-/* lineup */
-.lineup{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;list-style:none;padding:0;margin:0}
+/* sprite stage */
+.stage{background:linear-gradient(var(--panel) 0 82%,var(--floor) 82%);border:3px solid var(--line);padding:6px 6px 0}
+.stage canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
+.lineup{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;list-style:none;padding:0;margin:0}
 .lineup li{display:flex;flex-direction:column;gap:6px;min-width:0}
-.lineup span{font-family:var(--mono);font-size:11px;line-height:1.25;color:var(--muted);text-align:center;overflow-wrap:anywhere}
-.lineup b{display:block;color:var(--fg);font-weight:500}
+.lineup span{font-size:17px;line-height:1.05;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.lineup b{display:block;color:var(--fg);font-weight:400}
 
 /* quiz */
-.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
-.qhead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.opts{display:flex;flex-direction:column;gap:10px}
-.opt{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:6px;padding:14px 16px;font-size:17px;line-height:1.35}
-.opt:hover{border-color:var(--accent)}
-.opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 5px 0 0 var(--accent)}
+.qhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.bar{height:14px;border:3px solid var(--line);background:var(--panel)}
+.bar i{display:block;height:100%;background:var(--green);width:0}
+.opts{display:flex;flex-direction:column;gap:12px}
+.opt{text-align:left;background:var(--panel);border:3px solid var(--line);padding:12px 14px;font-family:var(--body);font-size:25px;line-height:1.1}
+.opt:hover,.opt[aria-pressed="true"]{border-color:var(--yellow);color:var(--yellow)}
 
 /* result */
-.result{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center}
-@media (max-width:560px){.result{grid-template-columns:1fr}.result .stagebox{max-width:240px}}
-.score{font-family:var(--display);font-weight:900;font-size:clamp(96px,26vw,168px);line-height:.8;color:var(--accent);font-variant-numeric:tabular-nums}
-.score small{font-size:.28em;color:var(--muted);letter-spacing:.02em}
-.cats{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 12px;align-items:center;font-size:15px}
-.cats .bar{height:10px}
-.cats .bar i{background:var(--fg)}
-.cats .pct{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;text-align:right}
-.lessons{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin:0}
-.lessons label{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--panel);border:2px solid var(--line);border-radius:6px;padding:14px 16px;cursor:pointer}
-.lessons input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--accent)}
-.lessons p{color:var(--muted);font-size:15px}
-.lessons .pts{font-family:var(--mono);font-size:13px;color:var(--good);white-space:nowrap}
-.note{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:14px;max-width:65ch}
-@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
+.result{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:22px;align-items:center}
+@media (max-width:560px){.result{grid-template-columns:1fr}.result .stage{max-width:230px}}
+.score{font-family:var(--display);font-size:clamp(56px,17vw,96px);line-height:1;color:var(--yellow);text-shadow:5px 5px 0 var(--pink);font-variant-numeric:tabular-nums}
+.score small{font-size:.22em;color:var(--muted);text-shadow:none}
+#tier{color:var(--cyan);font-size:clamp(16px,4.4vw,24px);text-transform:uppercase}
+.cats{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:center}
+.seg{display:flex;gap:3px}
+.seg i{width:16px;height:16px;background:var(--panel);border:2px solid var(--line)}
+.seg i.on{background:var(--green);border-color:var(--green)}
+.seg i.low{background:var(--pink);border-color:var(--pink)}
+.lessons{display:flex;flex-direction:column;gap:12px;list-style:none;padding:0;margin:0}
+.lessons label{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--panel);border:3px solid var(--line);padding:12px 14px;cursor:pointer}
+.lessons input{width:24px;height:24px;margin:2px 0 0;accent-color:var(--green)}
+.lessons .what{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lessons p{color:var(--muted);font-size:22px;line-height:1.1}
+.pts{font-size:10px;color:var(--green);white-space:nowrap;line-height:2}
+.note{border-top:3px solid var(--line);padding-top:14px;color:var(--muted);font-size:20px;max-width:60ch}
+@media (prefers-reduced-motion: reduce){.btn.blink{animation:none}}
 </style>
 
 <div class="wrap">
 
   <section id="intro" class="stack">
-    <p class="tag">Readiness check · 15 questions · 3 minutes</p>
+    <p class="tag">Insert coin · 20 questions · 4 minutes</p>
     <h1>How long would you last?</h1>
-    <p class="lede">The power is out. The taps are dry. Your phone is at 1%. Answer 15 questions and get your survival rating out of 100, plus the first three things to fix.</p>
-    <ul class="lineup" id="lineup" aria-label="The five ratings"></ul>
-    <button class="btn" id="start" type="button">Rate me</button>
-    <p class="note">Be honest. Nobody is watching, and the Indoor Cat rating is curable.</p>
+    <p class="lede">The power is out. The taps are dry. Your phone is at 1%. Answer 20 questions, get your survival rating out of 100, and find out which fighter you are.</p>
+    <ul class="lineup" id="lineup" aria-label="The five ranks"></ul>
+    <button class="btn blink" id="start" type="button">Press start</button>
+    <p class="note">Be honest. Nobody is watching, and Indoor Cat is curable. This is about being capable, not scared.</p>
   </section>
 
   <section id="quiz" class="stack" hidden>
@@ -106,59 +102,67 @@ button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px so
   <section id="done" class="stack" hidden>
     <p class="tag">Your survival rating</p>
     <div class="result">
-      <div class="stagebox" id="fig" role="img"></div>
+      <div class="stage"><canvas class="spr" id="fig" width="44" height="56" data-t="0" role="img"></canvas></div>
       <div class="stack">
-        <div class="score"><span id="num">0</span><small> /100</small></div>
+        <div class="score"><span id="num">0</span><small>/100</small></div>
         <h2 id="tier" tabindex="-1"></h2>
         <p class="lede" id="line"></p>
       </div>
     </div>
 
     <div class="stack">
-      <h3>Where you stand</h3>
+      <h3>Power levels</h3>
       <div class="cats" id="cats"></div>
     </div>
 
     <div class="stack">
-      <h3>Fix these first</h3>
-      <p>These are your three weakest areas. Tick a lesson off and watch your rating climb. That is how the course works.</p>
+      <h3>Your next missions</h3>
+      <p>Everyone starts with Phase 1, because your body is your first piece of survival gear. After that come your two weakest phases. Tick a mission off and watch your fighter level up.</p>
       <ul class="lessons" id="lessons"></ul>
     </div>
 
-    <button class="btn ghost" id="again" type="button">Take it again</button>
-    <p class="note">Prototype. The questions, points and lessons are a first draft for Aaron to correct. Nothing you enter is saved or sent anywhere.</p>
+    <button class="btn ghost" id="again" type="button">Play again</button>
+    <p class="note">Prototype. The ten phases and the missions come from Aaron's Preparedness curriculum. The questions and the points are a first draft for him to correct. Nothing you enter is saved or sent anywhere.</p>
   </section>
 
 </div>
 
 <script>
 (function(){
-  var CATS = {
-    water:{name:'Water', lesson:'Store two weeks of water', tip:'One gallon per person, per day. Start with three days this week.'},
-    food:{name:'Food', lesson:'Build a two-week pantry', tip:'Buy extra of what you already eat, then rotate it.'},
-    fire:{name:'Fire and warmth', lesson:'Three ways to make fire', tip:'Lighter, storm matches, ferro rod. Practice in the backyard, not in a crisis.'},
-    shelter:{name:'Shelter', lesson:'The night out you did not plan', tip:'A tarp, some cord, and getting yourself off the cold ground.'},
-    aid:{name:'First aid', lesson:'Stop the bleed', tip:'Direct pressure, a tourniquet, and a kit you have actually opened.'},
-    nav:{name:'Navigation', lesson:'Map and compass in an afternoon', tip:'Get a paper map of your county and walk a route with it.'},
-    power:{name:'Power and comms', lesson:'Lights and news with the grid down', tip:'A headlamp per person, spare batteries, one crank radio.'},
-    plan:{name:'Plan and people', lesson:'The one-page family plan', tip:'Where we meet, who we call, what we grab. Written down.'}
-  };
+  /* Aaron's ten phases, each with its practical mission. */
+  var PH = [
+    {name:'Body and mind', mission:'The 30-day resilience challenge', tip:'Progressive training, time outdoors and daily discipline. Record your fitness on day 1 and day 30.'},
+    {name:'Risks and family plan', mission:'Write the household emergency plan', tip:'Work out your most likely emergencies, write the plan down, then run your first family drill.'},
+    {name:'Heat and power', mission:'The seven-day outage plan', tip:'List your backup heat and power, and plan a full week without the grid.'},
+    {name:'Water', mission:'Build your water reserve', tip:'Store emergency water and practice two ways to make water safe to drink.'},
+    {name:'Food', mission:'Grow it and keep it', tip:'Grow one edible crop and preserve a small harvest with a safe, tested method.'},
+    {name:'Field skills', mission:'The wilderness skills weekend', tip:'Map and compass, fire, knots and camp cooking, with someone who knows how.'},
+    {name:'Wild food', mission:'Catch it, cook it', tip:'Join a guided fishing or hunting outing and make a full meal from local food.'},
+    {name:'Security and medical', mission:'Safety walkthrough and bleeding control', tip:'Walk the house, fix one weak spot, and take a first-aid or Stop the Bleed class.'},
+    {name:'Community and comms', mission:'Neighbors, radios, vehicle', tip:'Make a simple mutual-aid plan with a neighbor, test a radio, and inspect your vehicle.'},
+    {name:'Ready room', mission:'Go-bags and the practice outage', tip:'Put your gear in one place, pack the bags, and run a 24-hour practice outage at home.'}
+  ];
   var QS = [
-    {c:'water', q:'The taps stop working tonight. How much drinking water is in your home?', a:['Whatever is in the kettle','A case of bottles, maybe','A few days for everyone','Two weeks or more, and I rotate it']},
-    {c:'water', q:'You find water, but it looks sketchy. Can you make it safe to drink?', a:['I would sniff it and hope','Boil it, I think?','I own a filter or tablets','I own them and I have used them']},
-    {c:'food', q:'The stores are closed. How long does your household eat?', a:['Until the delivery app stops loading','Three days of strange pantry combinations','About two weeks','A month or more, on purpose']},
-    {c:'food', q:'No power and no gas. Can you cook?', a:['Cold cereal counts','There is a grill somewhere. Propane status unknown','Camp stove and fuel, ready to go','Several ways, including an open fire']},
-    {c:'fire', q:'Could you start a fire without a lighter or matches?', a:['No, and I am not sure where our matches are','I have seen it done on TV','I have done it once or twice','Reliably, even when it is wet']},
-    {c:'fire', q:'The heating goes out for three days in January. What happens?', a:['We move into the car','Blankets and complaining','We have proper sleeping bags or a backup heater','A tested plan: safe heat, one warm room, fuel stored']},
-    {c:'shelter', q:'You are stuck outside overnight with no warning. How does it go?', a:['I call someone to come get me','I huddle and suffer','I carry a tarp or emergency blanket and roughly know what to do','I can build a shelter that keeps me dry and warm']},
-    {c:'aid', q:'Someone next to you is bleeding badly. What do you do?', a:['Panic, then search online','Press on it and call for help','I have a kit and took a class once','I am trained, I carry a tourniquet, and I have practiced']},
-    {c:'aid', q:'What does your first aid kit look like?', a:['Cartoon bandages','A store-bought kit, still sealed','A stocked kit, and I know what is in it','Kits at home and in the car, plus spare prescriptions']},
-    {c:'nav', q:'Your phone is dead and you are five miles from home in country you do not know.', a:['I live here now','I follow a road and hope','I could read a paper map','Map and compass, no problem']},
-    {c:'power', q:'The grid is down for a week. What are you using for light?', a:['My phone flashlight, until it dies','Candles and one flashlight with mystery batteries','Headlamps, spare batteries and a power bank','Solar or a generator, tested, with fuel stored safely']},
-    {c:'power', q:'Cell networks are down. How do you get news or reach your family?', a:['I do not','The car radio','A battery or hand-crank radio','A radio, plus a meeting place everyone already knows']},
-    {c:'plan', q:'Does your household have an emergency plan?', a:['The plan is vibes','We talked about it once','It is written down, with a meeting spot','Written, practiced, and the bags are packed']},
-    {c:'plan', q:'You have ten minutes to leave the house. What do you take?', a:['My phone charger','Random things, thrown in a bag','A bag that is mostly packed','Go-bags by the door, and the car is never under half a tank']},
-    {c:'plan', q:'How well do you know your neighbors?', a:['I know their Wi-Fi names','We wave','I know a few of them and what they are good at','We have talked about helping each other in an emergency']}
+    {c:0, q:'You have to carry 40 pounds of water a mile back to the house. How does it go?', a:['I look for someone to deliver it','I make it, then cannot move for three days','Hard work, but fine','I train with a loaded pack on purpose']},
+    {c:0, q:'It is cold, it is wet, and you slept three hours. How do you function?', a:['I do not. I complain','Badly, and everyone hears about it','Grumpy, but I get things done','I practice being uncomfortable, so it does not rattle me']},
+    {c:1, q:'What emergency is most likely to hit where you live?', a:['The Wi-Fi going down','Something to do with weather, probably','I know the top two or three','I know them, and we have a plan for each']},
+    {c:1, q:'Does your household have an emergency plan?', a:['The plan is vibes','We talked about it once','It is written down, with a meeting spot','Written, practiced, and the kids know their jobs']},
+    {c:2, q:'The heating goes out for three days in January. What happens?', a:['We move into the car','Blankets and complaining','Proper sleeping bags or a backup heater','A tested plan: safe heat, one warm room, fuel stored']},
+    {c:2, q:'The grid is down for a week. What are you running on?', a:['My phone flashlight, until it dies','Candles and one flashlight with mystery batteries','Headlamps, spare batteries and a power bank','Solar or a generator, tested and safely connected']},
+    {c:3, q:'The taps stop working tonight. How much drinking water is in your home?', a:['Whatever is in the kettle','A case of bottles, maybe','A few days for everyone','Two weeks or more, and I rotate it']},
+    {c:3, q:'You find water, but it looks sketchy. Can you make it safe to drink?', a:['I would sniff it and hope','Boil it, I think?','I own a filter or tablets','I own them and I have used them']},
+    {c:4, q:'The stores are closed. How long does your household eat?', a:['Until the delivery app stops loading','Three days of strange pantry combinations','About two weeks','A month or more, on purpose']},
+    {c:4, q:'Have you ever grown or preserved your own food?', a:['I kept a basil plant alive for a week','One tomato plant, once','A real garden, or some canning','We grow, raise or preserve a real share of what we eat']},
+    {c:5, q:'Could you start a fire without a lighter or matches?', a:['No, and I am not sure where our matches are','I have seen it done on TV','I have done it once or twice','Reliably, even when it is wet']},
+    {c:5, q:'Your phone is dead and you are five miles from home in country you do not know.', a:['I live here now','I follow a road and hope','I could read a paper map','Map and compass, no problem']},
+    {c:6, q:'Could you catch a fish and turn it into dinner?', a:['I can order sushi','I have held a fishing rod','I can catch one and clean it','I fish or hunt every season, and it fills the freezer']},
+    {c:6, q:'Someone hands you a whole chicken. Feathers still on.', a:['I become a vegetarian','I would need a video and a lot of courage','I have helped process an animal before','I can dress and butcher poultry or game myself']},
+    {c:7, q:'Someone next to you is bleeding badly. What do you do?', a:['Panic, then search online','Press on it and call for help','I have a kit and took a class once','I am trained, I carry a tourniquet, and I have practiced']},
+    {c:7, q:'Walk around your home tonight. How safe and secure is it?', a:['The back door has been unlocked since 2019','The locks work. The smoke alarm chirps','Good locks, good lights, working smoke and CO alarms','All of that, and everyone knows the exits and the plan']},
+    {c:8, q:'How well do you know your neighbors?', a:['I know their Wi-Fi names','We wave','I know a few of them and what they are good at','We have agreed how to help each other in an emergency']},
+    {c:8, q:'Cell networks are down. How do you reach your family?', a:['I do not','I drive around looking for them','We own radios','Radios, a check-in schedule, and a meeting place everyone knows']},
+    {c:9, q:'You have ten minutes to leave the house. What do you take?', a:['My phone charger','Random things, thrown in a bag','A bag that is mostly packed','Go-bags by the door, and the car is never under half a tank']},
+    {c:9, q:'Where is your emergency gear right now?', a:['What gear?','Spread across the garage, the car and a drawer','Mostly in one place','One organized spot, inventoried and rotated']}
   ];
   var TIERS = [
     {min:0,  name:'Indoor Cat', line:'Fully dependent on staff. When the power goes out, the thing you will miss most is the Wi-Fi.'},
@@ -168,119 +172,142 @@ button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px so
     {min:80, name:'One-Person Army', line:'The grid goes down and you barely look up. Time to teach someone else.'}
   ];
   var LESSON_PTS = 5;
-
   function tierIndex(score){ var t=0; for(var i=0;i<TIERS.length;i++){ if(score>=TIERS[i].min) t=i; } return t; }
 
-  /* The figure: one drawing, driven by the score. Colors are fixed because it always sits on the pale stage card. */
-  function figure(score){
-    var m=Math.max(0,Math.min(1,score/100)), t=tierIndex(score);
-    var INK='#1C2820', SKIN='#E2B48C', HAIR='#3B2F25', ORANGE='#D9480F';
-    var SHIRT=['#8FA7B8','#C9A227','#6F8F5E','#7A3E2B','#4B5B3A'][t], PANTS=['#9AA08F','#6B7A8C','#5A5142','#3F4A3A','#2F3A2C'][t];
-    var cx=100, sw=18+30*m, ww=13+9*m, aw=6+15*m, lw=9+11*m, lx=ww*0.55, flex=(t===4);
-    var s='';
+  /* ---- Pixel fighters: drawn on a 44x56 grid, outlined, two-frame idle bob ---- */
+  var W=44, H=56, CX=22, INK='#160a2b', SK='#f2b98b', SKD='#c8875c', WHT='#f4f4f4', BLK='#1c1c24', GOLD='#ffd23f';
+  function sprite(t,f){
+    var g=new Array(W*H), dy=f?1:0, i;
+    for(i=0;i<W*H;i++) g[i]=null;
+    function R(x,y,w,h,c){ for(var yy=y;yy<y+h;yy++) for(var xx=x;xx<x+w;xx++) if(xx>=0&&xx<W&&yy>=0&&yy<H) g[yy*W+xx]=c; }
+    function M(x,y,w,h,c){ R(x,y,w,h,c); R(W-x-w,y,w,h,c); }
+    var shirt=['#7fa8d9','#ff9f1c','#d93f4c','#2f7d5b','#3f5d3a'][t], shirtD=['#5b7fb0','#cc7a0a','#a82a38','#1f5a40','#2a4027'][t];
+    var pants=['#b9b3c9','#4a6fb5','#5a4a8a','#6b4a2e','#4b4f3a'][t], pantsD=['#8f89a3','#35518a','#40346a','#4d331d','#33372a'][t];
+    var shoe=['#ff7eb6',WHT,'#7a4a25','#5a3a1c',BLK][t];
+    var sh=[5,6,7,9,11][t], wa=[4,5,5,6,7][t], aw=[2,2,3,4,5][t], lw=[2,3,3,4,5][t], gap=[0,0,1,1,2][t];
     // legs and feet
-    s+='<path d="M'+(cx-lx)+' 160 L'+(cx-lx-2)+' 230 M'+(cx+lx)+' 160 L'+(cx+lx+2)+' 230" stroke="'+PANTS+'" stroke-width="'+lw+'" stroke-linecap="round" fill="none"/>';
-    [-1,1].forEach(function(d){
-      var fx=cx+d*(lx+2)+d*4;
-      if(t===0) s+='<ellipse cx="'+fx+'" cy="238" rx="10" ry="3.5" fill="'+ORANGE+'"/>';
-      else if(t===1) s+='<ellipse cx="'+fx+'" cy="236" rx="12" ry="5.5" fill="#F4F7EE" stroke="'+INK+'" stroke-width="2"/>';
-      else s+='<rect x="'+(fx-13-m*3)+'" y="226" width="'+(26+m*6)+'" height="14" rx="4" fill="'+INK+'"/>';
-    });
-    // arms
-    var hands=[];
-    [-1,1].forEach(function(d){
-      var sx=cx+d*(sw-2), ex, ey, hx, hy;
-      if(flex){ ex=cx+d*(sw+24); ey=102; hx=cx+d*(sw+15); hy=62; }
-      else { ex=cx+d*(sw+5+4*m); ey=128; hx=cx+d*(sw+3+3*m); hy=164; }
-      s+='<path d="M'+sx+' 93 L'+ex+' '+ey+' L'+hx+' '+hy+'" stroke="'+SKIN+'" stroke-width="'+aw+'" stroke-linecap="round" stroke-linejoin="round" fill="none"/>';
-      if(flex) s+='<ellipse cx="'+((sx+ex)/2+d*2)+'" cy="91" rx="15" ry="11" fill="'+SKIN+'"/>';
-      hands.push([hx,hy]);
-    });
-    // neck and torso
-    s+='<rect x="'+(cx-4-5*m)+'" y="68" width="'+(8+10*m)+'" height="20" fill="'+SKIN+'"/>';
-    s+='<path d="M'+(cx-sw)+' 87 Q'+cx+' 80 '+(cx+sw)+' 87 L'+(cx+ww)+' 164 L'+(cx-ww)+' 164 Z" fill="'+SHIRT+'" stroke="'+INK+'" stroke-width="2" stroke-linejoin="round"/>';
-    if(m>0.55) s+='<path d="M'+(cx-sw*0.55)+' 108 Q'+(cx-sw*0.25)+' 116 '+cx+' 108 Q'+(cx+sw*0.25)+' 116 '+(cx+sw*0.55)+' 108" stroke="'+INK+'" stroke-width="1.5" fill="none" opacity=".5"/>';
-    if(t===2) s+='<path d="M'+(cx-sw*0.6)+' 86 L'+(cx-ww*0.7)+' 162 M'+(cx+sw*0.6)+' 86 L'+(cx+ww*0.7)+' 162" stroke="'+INK+'" stroke-width="5" fill="none"/>';
-    if(t===4) s+='<path d="M'+(cx-sw*0.75)+' 86 L'+(cx+ww*0.8)+' 160 M'+(cx-sw*0.5)+' 85 L'+(cx+ww)+' 152" stroke="#B08D57" stroke-width="4.5" stroke-linecap="round" fill="none"/>';
-    // head
-    s+='<circle cx="100" cy="50" r="22" fill="'+SKIN+'" stroke="'+INK+'" stroke-width="2"/>';
-    if(t===1) s+='<path d="M78 44 Q100 12 122 44 Z" fill="'+ORANGE+'" stroke="'+INK+'" stroke-width="2"/><path d="M119 42 L143 45 L120 49 Z" fill="'+ORANGE+'" stroke="'+INK+'" stroke-width="2" stroke-linejoin="round"/>';
-    else if(t===3) s+='<path d="M77 44 Q100 10 123 44 L123 48 L77 48 Z" fill="'+ORANGE+'" stroke="'+INK+'" stroke-width="2" stroke-linejoin="round"/>';
-    else s+='<path d="M78 46 Q80 25 100 25 Q120 25 122 46 Q110 35 100 37 Q90 35 78 46 Z" fill="'+HAIR+'"/>';
-    if(t===2) s+='<rect x="78" y="35" width="44" height="6" fill="'+INK+'"/><circle cx="100" cy="38" r="5.5" fill="#F5C542" stroke="'+INK+'" stroke-width="2"/>';
-    if(t===4) s+='<rect x="78" y="33" width="44" height="7" fill="'+ORANGE+'"/><path d="M122 35 Q138 30 146 40 M122 39 Q136 42 142 52" stroke="'+ORANGE+'" stroke-width="4" stroke-linecap="round" fill="none"/>';
-    if(t>=3) s+='<path d="M79 50 Q77 79 100 81 Q123 79 121 50 Q113 61 100 61 Q87 61 79 50 Z" fill="'+HAIR+'"/>';
-    // face
-    if(t===0) s+='<circle cx="92" cy="49" r="5" fill="#fff" stroke="'+INK+'" stroke-width="1.5"/><circle cx="108" cy="49" r="5" fill="#fff" stroke="'+INK+'" stroke-width="1.5"/><circle cx="92" cy="50" r="1.8" fill="'+INK+'"/><circle cx="108" cy="50" r="1.8" fill="'+INK+'"/>';
-    else s+='<circle cx="92" cy="49" r="2.3" fill="'+INK+'"/><circle cx="108" cy="49" r="2.3" fill="'+INK+'"/>';
-    if(t===4) s+='<path d="M84 55 L90 57 M110 57 L116 55" stroke="'+INK+'" stroke-width="2.5" stroke-linecap="round"/><path d="M87 43 L96 46 M104 46 L113 43" stroke="'+INK+'" stroke-width="2.5" stroke-linecap="round"/>';
-    var mouth=['M92 64 Q100 57 108 64','M93 62 L107 61','M93 60 Q100 66 107 60','M92 66 Q100 72 108 66','M93 67 L107 67'][t];
-    s+='<path d="'+mouth+'" stroke="'+(t>=3?'#F4F7EE':INK)+'" stroke-width="2.5" stroke-linecap="round" fill="none"/>';
-    // props
-    var h=hands[1];
-    if(t===0){
-      s+='<rect x="'+(h[0]-2)+'" y="'+(h[1]-12)+'" width="13" height="22" rx="2" fill="'+INK+'"/><text x="'+(h[0]+16)+'" y="'+(h[1]+3)+'" font-family="monospace" font-size="11" font-weight="700" fill="'+ORANGE+'">1%</text>';
-      s+='<path d="M130 30 q5 8 0 12 q-5 -4 0 -12 Z" fill="#5B8FA8"/>';
+    R(CX-gap-lw,33,lw,16,pants); R(CX-gap-1,33,1,16,pantsD);
+    R(CX+gap,33,lw,16,pants);    R(CX+gap+lw-1,33,1,16,pantsD);
+    R(CX-gap-lw-1,49,lw+1,3,shoe); R(CX+gap,49,lw+1,3,shoe);
+    // torso
+    for(var r=0;r<18;r++){ var half=Math.round(sh+(wa-sh)*r/17); R(CX-half,16+dy+r,2*half,1,shirt); R(CX+half-2,16+dy+r,2,1,shirtD); }
+    if(t===0){ R(CX-1,16+dy,2,9,WHT); R(CX-4,26+dy,8,1,WHT); R(CX+1,27+dy,1,3,WHT); }
+    if(t===1){ R(CX-5,20+dy,10,1,shirtD); R(CX-5,24+dy,10,1,shirtD); R(CX-5,28+dy,10,1,shirtD); R(CX,16+dy,1,17,'#fff3c4'); }
+    if(t===2){ R(CX-4,16+dy,1,15,shirtD); R(CX-1,16+dy,1,15,shirtD); R(CX+2,16+dy,1,15,shirtD); R(CX-5,20+dy,10,1,shirtD); R(CX-5,25+dy,10,1,shirtD); }
+    if(t===3){ R(CX-5,16+dy,2,15,'#e8c170'); R(CX+3,16+dy,2,15,'#e8c170'); }
+    if(t===4){
+      M(CX-11,16+dy,4,3,SK); R(CX-6,22+dy,12,1,shirtD);
+      for(i=0;i<14;i++){ R(CX-8+i,17+dy+i,3,2,'#b08d57'); if(i%3===1) R(CX-7+i,17+dy+i,1,1,GOLD); }
     }
-    if(t===1) s+='<rect x="'+(h[0]-3)+'" y="'+(h[1]-12)+'" width="13" height="18" rx="2" fill="#F4F7EE" stroke="'+INK+'" stroke-width="2"/><rect x="'+(h[0]-5)+'" y="'+(h[1]-15)+'" width="17" height="4" rx="1" fill="'+INK+'"/>';
-    if(t===3) s+='<path d="M'+h[0]+' '+(h[1]+4)+' L'+(h[0]+16)+' '+(h[1]-40)+'" stroke="#8A6A45" stroke-width="5" stroke-linecap="round"/><path d="M'+(h[0]+10)+' '+(h[1]-46)+' L'+(h[0]+32)+' '+(h[1]-44)+' L'+(h[0]+30)+' '+(h[1]-26)+' L'+(h[0]+13)+' '+(h[1]-34)+' Z" fill="#6E7780" stroke="'+INK+'" stroke-width="2" stroke-linejoin="round"/>';
-    return '<svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+s+'</svg>';
+    if(t>=2){ R(CX-wa,31+dy,2*wa,2,'#2a1c14'); R(CX-1,31+dy,2,2,GOLD); }
+    // arms
+    var ax=CX-sh-aw, rx=CX+sh;
+    if(t<4){
+      var sleeve=(t===1)?'#6f86a8':shirt, skinFrom=[13,13,7,5][t];
+      M(ax,17+dy,aw,13,sleeve); M(ax,17+dy+skinFrom,aw,13-skinFrom,SK); M(ax,30+dy,aw,3,SK);
+    } else {
+      M(CX-sh-6,17+dy,6,5,SK); M(CX-sh-5,15+dy,4,2,SK);
+      M(CX-sh-8,8+dy,4,10,SK); M(CX-sh-9,5+dy,6,4,SK); M(CX-sh-8,10+dy,4,1,'#ff3d8b');
+    }
+    // head
+    R(CX-4,6+dy,8,9,SK); R(CX+3,6+dy,1,9,SKD);
+    R(t===4?CX-3:CX-2,15+dy,t===4?6:4,1,SKD);
+    R(CX-3,9+dy,2,2,'#fff'); R(CX+1,9+dy,2,2,'#fff'); R(CX-2,10+dy,1,1,INK); R(CX+2,10+dy,1,1,INK);
+    if(t===0){
+      R(CX-4,4+dy,8,2,'#5a3a1c'); R(CX-3,3+dy,1,1,'#5a3a1c'); R(CX+1,3+dy,2,1,'#5a3a1c');
+      R(CX-2,13+dy,4,1,'#8a3b2a'); R(CX-3,14+dy,1,1,'#8a3b2a'); R(CX+2,14+dy,1,1,'#8a3b2a');
+      R(CX+6,6+dy,1,2,'#3df2ff');
+      R(rx,28+dy,3,5,BLK); R(rx+1,29+dy,1,2,'#3df2ff');
+    }
+    if(t===1){
+      R(CX-4,4+dy,8,3,'#3df2ff'); R(CX-5,7+dy,10,1,'#1fb5c4'); R(CX-1,13+dy,2,1,'#8a3b2a');
+      R(rx,29+dy,4,4,WHT); R(rx+4,30+dy,1,2,WHT); R(rx+1,26+dy,1,2,'#b9b3c9');
+    }
+    if(t===2){
+      R(CX-4,4+dy,8,2,'#3b2414'); R(CX-4,6+dy,8,1,BLK); R(CX-1,5+dy,2,2,GOLD);
+      R(CX-2,13+dy,4,1,'#8a3b2a'); R(CX-3,12+dy,1,1,'#8a3b2a'); R(CX+2,12+dy,1,1,'#8a3b2a');
+      R(rx,27+dy,3,6,BLK); R(rx+2,23+dy,1,4,BLK); R(rx+1,28+dy,1,1,'#7cff6b');
+    }
+    if(t===3){
+      R(CX-4,3+dy,8,3,'#e63946'); R(CX-5,6+dy,10,2,WHT); R(CX-1,2+dy,2,1,WHT);
+      R(CX-5,11+dy,10,3,'#6b3f1d'); R(CX-4,14+dy,8,2,'#6b3f1d'); R(CX-1,13+dy,2,1,SK);
+      R(rx+aw,14+dy,1,20,'#b08d57'); R(rx+aw+1,13+dy,4,6,'#c9d1d9'); R(rx+aw+5,14+dy,1,4,'#fff');
+    }
+    if(t===4){
+      R(CX-4,4+dy,8,2,BLK); R(CX-5,6+dy,10,2,'#ff3d8b'); R(CX+5,7+dy,3,1,'#ff3d8b'); R(CX+7,8+dy,2,2,'#ff3d8b'); R(CX+6,10+dy,2,2,'#ff3d8b');
+      R(CX-3,8+dy,2,1,INK); R(CX+1,8+dy,2,1,INK);
+      R(CX-4,12+dy,8,3,'#a56b47'); R(CX-2,13+dy,4,1,'#fff');
+    }
+    // outline, then ground shadow
+    var src=g.slice();
+    for(var y=0;y<H;y++) for(var x=0;x<W;x++){
+      if(src[y*W+x]) continue;
+      if((x>0&&src[y*W+x-1])||(x<W-1&&src[y*W+x+1])||(y>0&&src[(y-1)*W+x])||(y<H-1&&src[(y+1)*W+x])) g[y*W+x]=INK;
+    }
+    for(x=CX-10;x<CX+10;x++){ if(!g[53*W+x]) g[53*W+x]='rgba(0,0,0,.4)'; if(!g[54*W+x]&&x>CX-9&&x<CX+8) g[54*W+x]='rgba(0,0,0,.4)'; }
+    return g;
   }
+  var cache={};
+  function paintSprite(cv,t,f){
+    var k=t+'-'+f, g=cache[k]||(cache[k]=sprite(t,f)), ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<g.length;i++){ if(g[i]){ ctx.fillStyle=g[i]; ctx.fillRect(i%W,(i/W)|0,1,1); } }
+  }
+  var frame=0;
+  function paintAll(){ var all=document.querySelectorAll('canvas.spr'); for(var i=0;i<all.length;i++) paintSprite(all[i],+all[i].dataset.t,frame); }
+  window.__sprite=sprite;
 
   var $=function(id){return document.getElementById(id);};
-  var answers=[], i=0, doneLessons={}, shown=0;
+  var answers=[], qi=0, doneLessons={}, shown=0;
 
-  // intro lineup
-  $('lineup').innerHTML=[8,30,50,70,95].map(function(sc,k){
+  $('lineup').innerHTML=TIERS.map(function(t,k){
     var top=k<4?TIERS[k+1].min-1:100;
-    return '<li><div class="stagebox">'+figure(sc)+'</div><span><b>'+TIERS[k].name+'</b>'+TIERS[k].min+' to '+top+'</span></li>';
+    return '<li><div class="stage"><canvas class="spr" width="44" height="56" data-t="'+k+'" aria-hidden="true"></canvas></div><span><b>'+t.name+'</b>'+t.min+'-'+top+'</span></li>';
   }).join('');
+  paintAll();
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce) setInterval(function(){ frame=1-frame; paintAll(); },480);
 
   function show(id){ ['intro','quiz','done'].forEach(function(s){ $(s).hidden=(s!==id); }); window.scrollTo(0,0); }
 
   function renderQ(){
-    var q=QS[i];
-    $('qcat').textContent=CATS[q.c].name;
-    $('qnum').textContent='Question '+(i+1)+' of '+QS.length;
-    $('qbar').style.width=(i/QS.length*100)+'%';
+    var q=QS[qi];
+    $('qcat').textContent='Stage '+(q.c+1)+' of 10 · '+PH[q.c].name;
+    $('qnum').textContent='Q'+(qi+1)+' of '+QS.length;
+    $('qbar').style.width=(qi/QS.length*100)+'%';
     $('qtext').textContent=q.q;
     $('qopts').innerHTML=q.a.map(function(txt,k){
-      return '<button type="button" class="opt" id="opt-'+k+'" data-k="'+k+'" aria-pressed="'+(answers[i]===k)+'">'+txt+'</button>';
+      return '<button type="button" class="opt" id="opt-'+k+'" data-k="'+k+'" aria-pressed="'+(answers[qi]===k)+'">'+txt+'</button>';
     }).join('');
-    $('back').hidden=(i===0);
+    $('back').hidden=(qi===0);
     $('qtext').focus({preventScroll:true});
   }
-
   $('qopts').addEventListener('click',function(e){
     var b=e.target.closest('.opt'); if(!b) return;
-    answers[i]=+b.dataset.k;
-    if(i<QS.length-1){ i++; renderQ(); } else { finish(); }
+    answers[qi]=+b.dataset.k;
+    if(qi<QS.length-1){ qi++; renderQ(); } else { finish(); }
   });
-  $('back').addEventListener('click',function(){ if(i>0){ i--; renderQ(); } });
-  $('start').addEventListener('click',function(){ answers=[]; i=0; show('quiz'); renderQ(); });
+  $('back').addEventListener('click',function(){ if(qi>0){ qi--; renderQ(); } });
+  $('start').addEventListener('click',function(){ answers=[]; qi=0; show('quiz'); renderQ(); });
   $('again').addEventListener('click',function(){ show('intro'); });
 
   function baseScore(){ var sum=0; answers.forEach(function(a){ sum+=a; }); return Math.round(sum/(QS.length*3)*100); }
-  function catScores(){
-    var out={};
-    Object.keys(CATS).forEach(function(c){ out[c]={got:0,max:0}; });
-    QS.forEach(function(q,k){ out[q.c].got+=answers[k]||0; out[q.c].max+=3; });
-    return out;
-  }
+  function phasePts(){ var out=PH.map(function(){return 0;}); QS.forEach(function(q,k){ out[q.c]+=answers[k]||0; }); return out; }
   function total(){ return Math.min(100, baseScore()+LESSON_PTS*Object.keys(doneLessons).length); }
 
   function paint(animate){
-    var sc=total(), t=TIERS[tierIndex(sc)];
+    var sc=total(), ti=tierIndex(sc), t=TIERS[ti];
     $('tier').textContent=t.name;
     $('line').textContent=t.line;
-    $('fig').innerHTML=figure(sc);
-    $('fig').setAttribute('aria-label','Cartoon of your rating: '+t.name);
-    var cs=catScores();
-    $('cats').innerHTML=Object.keys(CATS).map(function(c){
-      var p=Math.round(cs[c].got/cs[c].max*100); if(doneLessons[c]) p=Math.min(100,p+25);
-      return '<span>'+CATS[c].name+'</span><div class="bar"><i style="width:'+p+'%"></i></div><span class="pct">'+p+'%</span>';
+    $('fig').dataset.t=ti;
+    $('fig').setAttribute('aria-label','Pixel fighter for your rank: '+t.name);
+    paintAll();
+    var pts=phasePts();
+    $('cats').innerHTML=PH.map(function(p,c){
+      var n=Math.min(6,pts[c]+(doneLessons[c]?2:0)), segs='';
+      for(var s=0;s<6;s++) segs+='<i class="'+(s<n?(n<=2?'low':'on'):'')+'"></i>';
+      return '<span>'+(c+1)+'. '+p.name+'</span><div class="seg" role="img" aria-label="'+n+' of 6">'+segs+'</div>';
     }).join('');
-    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!animate||reduce){ shown=sc; $('num').textContent=sc; return; }
     var from=shown, start=null;
     function step(ts){ if(start===null) start=ts; var k=Math.min(1,(ts-start)/600); shown=Math.round(from+(sc-from)*k); $('num').textContent=shown; if(k<1) requestAnimationFrame(step); }
@@ -290,18 +317,18 @@ button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px so
 
   function finish(){
     doneLessons={}; shown=0;
-    var cs=catScores();
-    var weakest=Object.keys(CATS).map(function(c,k){ return {c:c,p:cs[c].got/cs[c].max,k:k}; })
-      .sort(function(a,b){ return a.p-b.p||a.k-b.k; }).slice(0,3);
-    $('lessons').innerHTML=weakest.map(function(w){
-      var c=CATS[w.c];
-      return '<li><label for="lesson-'+w.c+'"><input type="checkbox" id="lesson-'+w.c+'" data-c="'+w.c+'"><span><h3>'+c.lesson+'</h3><p>'+c.tip+'</p></span><span class="pts">+'+LESSON_PTS+' pts</span></label></li>';
+    var pts=phasePts();
+    var rest=PH.map(function(p,c){ return {c:c,p:pts[c]}; }).slice(1).sort(function(a,b){ return a.p-b.p||a.c-b.c; }).slice(0,2);
+    var picks=[0].concat(rest.map(function(r){return r.c;}).sort(function(a,b){return a-b;}));
+    $('lessons').innerHTML=picks.map(function(c){
+      var p=PH[c];
+      return '<li><label for="lesson-'+c+'"><input type="checkbox" id="lesson-'+c+'" data-c="'+c+'"><span class="what"><h3>Phase '+(c+1)+': '+p.mission+'</h3><p>'+p.tip+'</p></span><span class="pts">+'+LESSON_PTS+'</span></label></li>';
     }).join('');
     show('done'); paint(true);
     $('tier').focus({preventScroll:true});
   }
   $('lessons').addEventListener('change',function(e){
-    var c=e.target.dataset.c; if(!c) return;
+    var c=e.target.dataset.c; if(c===undefined) return;
     if(e.target.checked) doneLessons[c]=true; else delete doneLessons[c];
     paint(true);
   });
